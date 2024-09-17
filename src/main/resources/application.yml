@@ -1,0 +1,17 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: VitaminCode_BE
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vitamincode_class
+    username: root
+    password: root
+
+mybatis:
+  config-location: classpath:/static/mybatis/mybatis-config.xml
+  mapper-locations: classpath:/static/mybatis/mapper/*.xml
+
