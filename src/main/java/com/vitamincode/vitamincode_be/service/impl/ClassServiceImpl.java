@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -19,5 +20,29 @@ public class ClassServiceImpl implements ClassService {
             return classMapper.selectAllClass();
         }
         return null;
+    }
+
+    @Override
+    public Class findClassById(Integer classId) {
+        var resultEntity = classMapper.selectClassById(classId);
+        if(Objects.nonNull(resultEntity)) {
+            return resultEntity;
+        }
+        return null;
+    }
+
+    @Override
+    public Integer insertClass(Class classEntity) {
+        return classMapper.insertClass(classEntity);
+    }
+
+    @Override
+    public Integer updateClass(Class classEntity) {
+        return classMapper.updateClass(classEntity);
+    }
+
+    @Override
+    public Integer deleteClassById(Integer classId) {
+        return classMapper.deleteClassById(classId);
     }
 }

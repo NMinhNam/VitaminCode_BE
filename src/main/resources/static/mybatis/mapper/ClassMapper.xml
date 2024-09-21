@@ -11,6 +11,30 @@
         <result property="classDescription" column="class_description"/>
     </resultMap>
 
+    <insert id="insertClass">
+        insert into class(
+           class_name
+         , class_description
+        )
+        values (
+           #{classEntity.className},
+           #{classEntity.classDescription}
+               )
+    </insert>
+
+    <update id="updateClass">
+        update class
+        set class_name = #{classEntity.className}
+        and class_description = #{classEntity.classDescription}
+        where class_id = #{classEntity.classId}
+    </update>
+
+    <delete id="deleteClassById">
+        delete
+        from class
+        where class_id = #{classId}
+    </delete>
+
     <select id="selectAllClass" resultMap="ClassResultMap">
         select class_id
              , class_name
@@ -18,4 +42,11 @@
         from class
     </select>
 
+    <select id="selectClassById" resultMap="ClassResultMap">
+        select class_id
+             , class_name
+             , class_description
+        from class
+        where class_id = #{classId}
+    </select>
 </mapper>
