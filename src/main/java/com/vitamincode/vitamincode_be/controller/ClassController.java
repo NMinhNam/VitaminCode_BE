@@ -1,8 +1,9 @@
 package com.vitamincode.vitamincode_be.controller;
 
-import com.vitamincode.vitamincode_be.entity.Class;
+import com.vitamincode.vitamincode_be.dto.request.ClassDtoRequest;
 import com.vitamincode.vitamincode_be.service.ClassService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/class")
 @RequiredArgsConstructor
+@Slf4j
 public class ClassController {
     private final ClassService classService;
 
@@ -26,6 +28,7 @@ public class ClassController {
             resultMapAPI.put("status", 500);
             resultMapAPI.put("success", false);
             resultMapAPI.put("message", e.getMessage());
+            log.error("Fail to call API /api/v1/class/getAllClass ", e);
         }
         return ResponseEntity.ok(resultMapAPI);
     }
@@ -61,7 +64,7 @@ public class ClassController {
     }
 
     @PostMapping("/createClass")
-    public ResponseEntity<?> createClass(@RequestBody Class classEntity) {
+    public ResponseEntity<?> createClass(@RequestBody ClassDtoRequest classEntity) {
         Map<String, Object> resultMapAPI = new LinkedHashMap<>();
         try {
             resultMapAPI.put("status", 200);
@@ -76,7 +79,7 @@ public class ClassController {
     }
 
     @PutMapping("/updateClass")
-    public ResponseEntity<?> updateClass(@RequestBody Class classEntity) {
+    public ResponseEntity<?> updateClass(@RequestBody ClassDtoRequest classEntity) {
         Map<String, Object> resultMapAPI = new LinkedHashMap<>();
         try {
             resultMapAPI.put("status", 200);

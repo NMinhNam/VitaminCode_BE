@@ -1,17 +1,18 @@
 package com.vitamincode.vitamincode_be.service;
 
-import com.vitamincode.vitamincode_be.entity.Class;
+import com.vitamincode.vitamincode_be.dto.request.ClassDtoRequest;
+import com.vitamincode.vitamincode_be.dto.response.ClassDtoResponse;
 
 import java.util.List;
 
 public interface ClassService {
-    List<Class> findAllClass();
+    List<ClassDtoResponse> findAllClass();
 
-    Class findClassById(Integer classId);
+    ClassDtoResponse findClassById(Integer classId);
 
-    Integer insertClass(Class classEntity);
+    Integer insertClass(ClassDtoRequest classEntity);
 
-    Integer updateClass(Class classEntity);
+    Integer updateClass(ClassDtoRequest classEntity);
     
     Integer deleteClassById(Integer classId);
 }
