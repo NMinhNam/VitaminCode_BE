@@ -11,6 +11,12 @@
         <result property="classDescription" column="class_description"/>
     </resultMap>
 
+    <sql id="ColumnClass">
+        class_id
+        , class_name
+        , class_description
+    </sql>
+
     <insert id="insertClass">
         insert into class(
            class_name
@@ -24,8 +30,8 @@
 
     <update id="updateClass">
         update class
-        set class_name = #{classEntity.className}
-        and class_description = #{classEntity.classDescription}
+        set class_name = #{classEntity.className},
+            class_description = #{classEntity.classDescription}
         where class_id = #{classEntity.classId}
     </update>
 
@@ -36,17 +42,46 @@
     </delete>
 
     <select id="selectAllClass" resultMap="ClassResultMap">
-        select class_id
-             , class_name
-             , class_description
+        select
+        <include refid="ColumnClass"/>
         from class
     </select>
 
     <select id="selectClassById" resultMap="ClassResultMap">
-        select class_id
-             , class_name
-             , class_description
+        select
+            <include refid="ColumnClass"/>
         from class
-        where class_id = #{classId}
+        <where>
+            <if test="classId != null">
+                class_id = #{classId}
+            </if>
+        </where>
     </select>
+
+    <select id="selectClass" resultMap="ClassResultMap">
+        select
+            <include refid="ColumnClass"/>
+        from class
+        <where>
+            1 = 1
+            <if test="classEntity.classId != null">
+                and class_id = #{classId}
+            </if>
+            <if test="classEntity.className != null">
+                and class_name = #{className}
+            </if>
+            <if test="classEntity.classDescription != null">
+                and class_description = #{classDescription}
+            </if>
+        </where>
+    </select>
+
+    <select id="isClassExists" resultType="boolean">
+        select exists(
+            select 1
+            from class
+        where class_id = #{classId}
+        )
+    </select>
+
 </mapper>

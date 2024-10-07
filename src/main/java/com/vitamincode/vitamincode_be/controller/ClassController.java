@@ -6,12 +6,7 @@ import com.vitamincode.vitamincode_be.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/class")
@@ -39,7 +34,8 @@ public class ClassController {
     }
 
     @GetMapping("/getClass")
-    public ApiResponse<?> getClass(@RequestParam("id") Integer classId) {
+    public ApiResponse<?> getClass(@RequestParam(name = "classId"
+            , required = false) Integer classId) {
         return ApiResponse.builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
@@ -47,21 +43,21 @@ public class ClassController {
                 .build();
     }
 
-    @PostMapping("/createClass")
-    public ApiResponse<?> createClass(@RequestBody ClassDtoRequest classEntity) {
+    @GetMapping("/getListClass")
+    public ApiResponse<?> getClass(ClassDtoRequest classDtoRequest) {
         return ApiResponse.builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(classService.insertClass(classEntity))
+                .data(classService.findClass(classDtoRequest))
                 .build();
     }
 
-    @PutMapping("/updateClass")
-    public ApiResponse<?> updateClass(@RequestBody ClassDtoRequest classEntity) {
+    @PostMapping("/save")
+    public ApiResponse<?> saveClass(@RequestBody ClassDtoRequest classDtoRequest) {
         return ApiResponse.builder()
                 .status(HttpStatus.OK.value())
                 .success(true)
-                .data(classService.updateClass(classEntity))
+                .data(classService.saveClass(classDtoRequest))
                 .build();
     }
 

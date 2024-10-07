@@ -10,11 +10,15 @@ import java.util.List;
 public interface ClassMapper {
     List<Class> selectAllClass();
 
-    Class selectClassById(@Param("classId") Integer classId);
+    List<Class> selectClassById(@Param("classId") Integer classId);
+
+    List<Class> selectClass(@Param("classEntity") Class classEntity);
 
     int insertClass(@Param("classEntity") Class classEntity);
 
     int updateClass(@Param("classEntity") Class classEntity);
 
     int deleteClassById(@Param("classId") Integer classId);
+
+    boolean isClassExists(@Param("classId") Integer classId);
 }

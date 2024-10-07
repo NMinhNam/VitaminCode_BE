@@ -15,6 +15,18 @@ public class GlobalExceptionHandling {
         log.error("Failed to call API " + request.getRequestURI() + " : " + e);
     }
 
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handleAppException(AppException e, HttpServletRequest request) {
+        logError(e, request);
+        ErrorCode errorCode = e.getErrorCode();
+        return ResponseEntity.badRequest().body(
+                ApiResponse.builder()
+                        .status(errorCode.getStatus())
+                        .message(errorCode.getMessage())
+                        .build()
+        );
+    }
+
     @ExceptionHandler(value = BadSqlGrammarException.class)
     ResponseEntity<ApiResponse> handleBadSqlGrammarException(BadSqlGrammarException e, HttpServletRequest request) {
         logError(e, request);

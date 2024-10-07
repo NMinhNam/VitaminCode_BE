@@ -8,11 +8,11 @@ import java.util.List;
 public interface ClassService {
     List<ClassDtoResponse> findAllClass();
 
-    ClassDtoResponse findClassById(Integer classId);
+    List<ClassDtoResponse> findClassById(Integer classId);
 
-    Integer insertClass(ClassDtoRequest classEntity);
+    List<ClassDtoResponse> findClass(ClassDtoRequest classDtoRequest);
 
-    Integer updateClass(ClassDtoRequest classEntity);
-    
     Integer deleteClassById(Integer classId);
+
+    Integer saveClass(ClassDtoRequest classDtoRequest);
 }

@@ -9,10 +9,8 @@ import com.vitamincode.vitamincode_be.mapper.ClassMapper;
 import com.vitamincode.vitamincode_be.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -23,31 +21,37 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<ClassDtoResponse> findAllClass() {
         var listEntityResponse = classMapper.selectAllClass();
-        if(listEntityResponse.isEmpty()) throw new AppException(ErrorCode.LIST_CLASS_EMPTY);
+        if (listEntityResponse.isEmpty()) throw new AppException(ErrorCode.LIST_CLASS_EMPTY);
         return classMapStruct.toClassDtoResponseList(listEntityResponse);
     }
 
     @Override
-    public ClassDtoResponse findClassById(Integer classId) {
+    public List<ClassDtoResponse> findClassById(Integer classId) {
         var resultEntity = classMapper.selectClassById(classId);
-        if (Objects.isNull(resultEntity)) throw new AppException(ErrorCode.CLASS_EMPTY);
-        return classMapStruct.toClassDtoResponse(resultEntity);
+        if (resultEntity.isEmpty()) throw new AppException(ErrorCode.CLASS_EMPTY);
+        return classMapStruct.toClassDtoResponseList(resultEntity);
     }
 
     @Override
-    public Integer insertClass(ClassDtoRequest classDtoRequest) {
+    public List<ClassDtoResponse> findClass(ClassDtoRequest classDtoRequest) {
         var classEntity = classMapStruct.toClass(classDtoRequest);
-        return classMapper.insertClass(classEntity);
-    }
-
-    @Override
-    public Integer updateClass(ClassDtoRequest classDtoRequest) {
-        var classEntity = classMapStruct.toClass(classDtoRequest);
-        return classMapper.updateClass(classEntity);
+        return classMapStruct.toClassDtoResponseList(
+                classMapper.selectClass(classEntity)
+        );
     }
 
     @Override
     public Integer deleteClassById(Integer classId) {
         return classMapper.deleteClassById(classId);
+    }
+
+    @Override
+    public Integer saveClass(ClassDtoRequest classDtoRequest) {
+        Integer classId = classDtoRequest.getClassId();
+        var classEntity = classMapStruct.toClass(classDtoRequest);
+        if(classMapper.isClassExists(classId)) {
+            return classMapper.updateClass(classEntity);
+        }
+        return classMapper.insertClass(classEntity);
     }
 }
