@@ -1,6 +1,8 @@
 package com.vitamincode.vitamincode_be.exception;
 
+import com.nimbusds.jose.JOSEException;
 import com.vitamincode.vitamincode_be.dto.response.ApiResponse;
+import com.vitamincode.vitamincode_be.enums.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +47,17 @@ public class GlobalExceptionHandling {
                 ApiResponse.builder()
                         .status(ErrorCode.UNCAUGHT_EXCEPTION.getStatus())
                         .message(ErrorCode.UNCAUGHT_EXCEPTION.getMessage())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(value = JOSEException.class)
+    ResponseEntity<ApiResponse> handleJOSEException(JOSEException e, HttpServletRequest request) {
+        logError(e, request);
+        return ResponseEntity.badRequest().body(
+                ApiResponse.builder()
+                        .status(ErrorCode.CANNOT_SIGN_JWT.getStatus())
+                        .message(ErrorCode.CANNOT_SIGN_JWT.getMessage())
                         .build()
         );
     }

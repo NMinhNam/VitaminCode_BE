@@ -5,23 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(schema = "vitamincode_class", name = "user")
+@Table(schema = "vitamincode_class", name = "`user`")
 @Getter
 @Setter
 public class User {
     @Id
-    @GeneratedValue
+    @Column(name = "id")
     private Integer userId;
 
-    @Column
+    @Column(name = "username")
     private String userName;
 
-    @Column
+    @Column(name = "password")
     private String password;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
-    @Column
+    @Column(name = "enabled")
     private Boolean enabled;
+
+    @Column(name = "role_id")
+    private Integer roleId;
 }
