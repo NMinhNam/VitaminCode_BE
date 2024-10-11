@@ -32,6 +32,12 @@ VALUES ('Alice Johnson', 'alice.johnson@example.com', 4),
        ('Charlie Brown', 'charlie.brown@example.com', 1),
        ('David Lee', 'david.lee@example.com', 3);
 
+CREATE TABLE `role` (
+                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                        name VARCHAR(50) NOT NULL UNIQUE,
+                        description VARCHAR(255)
+);
+
 CREATE TABLE `user` (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         username VARCHAR(50) NOT NULL UNIQUE,
@@ -42,16 +48,11 @@ CREATE TABLE `user` (
                         FOREIGN KEY (role_id) REFERENCES `role`(id) ON DELETE SET NULL
 );
 
-CREATE TABLE `role` (
-                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        name VARCHAR(50) NOT NULL UNIQUE,
-                        description VARCHAR(255)
-);
-
 INSERT INTO `role` (name, description) VALUES
                                            ('ADMIN', 'Administrator with full permissions'),
                                            ('USER', 'Standard user with limited permissions'),
                                            ('MANAGER', 'Manager with extended permissions');
+
 
 INSERT INTO `user` (username, password, email, enabled, role_id) VALUES
                                                                      ('vitamincode01', '$2a$12$.R0rjHgqaAEkmVlovBUtJO8thl36eXVvUQ7RF.7IRYFfEBSiLRhzW', 'john.doe@example.com', TRUE, 1), -- ADMIN
