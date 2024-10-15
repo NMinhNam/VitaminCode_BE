@@ -11,8 +11,9 @@ public enum ErrorCode {
     LIST_CLASS_EMPTY(1000, "List Class is empty"),
     CLASS_EMPTY(1000, "Class is empty"),
     USER_EMPTY(1000, "User is empty"),
-    PASSWORD_INCORRECT(1000, "Password is incorrect"),
-    CANNOT_SIGN_JWT(1000, "Cannot sign JWT"),
+    PASSWORD_INCORRECT(1001, "Password is incorrect"),
+    CANNOT_SIGN_JWT(1001, "Cannot sign JWT"),
+    INVALID_TOKEN(1001, "Invalid Token"),
     ;
 
     private final Integer status;

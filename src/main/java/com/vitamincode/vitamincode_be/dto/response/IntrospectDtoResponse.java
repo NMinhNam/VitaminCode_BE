@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AuthenticationDtoResponse {
-    private String accessToken;
+public class IntrospectDtoResponse {
+    private Boolean isValid;
 }
