@@ -58,3 +58,8 @@ INSERT INTO `user` (username, password, email, enabled, role_id) VALUES
                                                                      ('vitamincode01', '$2a$12$.R0rjHgqaAEkmVlovBUtJO8thl36eXVvUQ7RF.7IRYFfEBSiLRhzW', 'john.doe@example.com', TRUE, 1), -- ADMIN
                                                                      ('root', '$2a$12$k3HMaRHpuOrAszjIr2Rys.jbvY.jjNwu5CE5SihxOUULHZGEjJRSC', 'jane.smith@example.com', TRUE, 2), -- USER
                                                                      ('minhnam', '$2a$12$1b9bq4pmBiPj3c003EJft.WRjQ/nT9CosLgI1zeRmOBIT4y.QAC5O', 'mike.brown@example.com', FALSE, 3); -- MANAGER
+
+create table invalidated_token(
+                                  id       varchar(255) not null  primary key,
+                                  exp_time timestamp    not null
+);
