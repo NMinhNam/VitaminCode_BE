@@ -3,6 +3,7 @@ package com.vitamincode.vitamincode_be.controller;
 import com.nimbusds.jose.JOSEException;
 import com.vitamincode.vitamincode_be.dto.request.AuthenticationDtoRequest;
 import com.vitamincode.vitamincode_be.dto.request.IntrospectDtoRequest;
+import com.vitamincode.vitamincode_be.dto.request.LogoutDtoRequest;
 import com.vitamincode.vitamincode_be.dto.response.ApiResponse;
 import com.vitamincode.vitamincode_be.dto.response.AuthenticationDtoResponse;
 import com.vitamincode.vitamincode_be.dto.response.IntrospectDtoResponse;
@@ -37,6 +38,15 @@ public class AuthenticationController {
                 .status(HttpStatus.OK.value())
                 .success(true)
                 .data(authenticationService.introspect(request))
+                .build();
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutDtoRequest accessToken) throws ParseException, JOSEException {
+        return ApiResponse.<Void>builder()
+                .status(HttpStatus.OK.value())
+                .success(true)
+                .data(authenticationService.logout(accessToken))
                 .build();
     }
 }
