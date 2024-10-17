@@ -1,5 +1,7 @@
 package com.vitamincode.vitamincode_be.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,8 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @Column(name = "role_id")
-    private Integer roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    @JsonIgnore
+    private Role role;
 }
